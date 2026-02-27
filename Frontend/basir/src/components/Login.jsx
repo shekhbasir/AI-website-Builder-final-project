@@ -1,7 +1,16 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
-
+import { auth, provider } from "../firebase.jsx";
+import { signInWithPopup, signOut } from "firebase/auth";
 function Login({ open, closelogin }) {
+  const HandleGoogleauth = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log(result.user);
+    } catch (error) {
+      console.log(`this is the error from Login ${error}`);
+    }
+  };
   return (
     <AnimatePresence>
       {open && (
@@ -33,18 +42,40 @@ function Login({ open, closelogin }) {
               flex items-center justify-center gap-3 
               font-semibold shadow-md 
               hover:shadow-lg hover:scale-[1.02] 
-              transition-all duration-200"
+              transition-all duration-200 cursor-pointer "
+              onClick={HandleGoogleauth}
             >
               <FcGoogle size={24} />
               <span>Continue with Google</span>
             </button>
 
             <button
+              className="mt-4 w-full border border-gray-600 py-2 rounded-lg hover:bg-gray-800 transition duration-200 cursor-pointer text-red-500 font-bold "
               onClick={closelogin}
-              className="mt-4 w-full border border-gray-600 py-2 rounded-lg hover:bg-gray-800 transition duration-200"
             >
               Cancel
             </button>
+            <div className="flex justify-center items-center p-[10px] ">
+              <div className="h-px flex-1 bg-white/10" />
+              <span className="text-xl tracking-wide text-zinc-500">
+                Secure Login
+              </span>
+              <div className="h-px flex-1 bg-white/10" />
+            </div>
+            <div className=" text-gray-400 font-light p-[20px]">
+              <span>By continuing you Agree</span>{" "}
+              <span className="underline cursor-pointer hover:text-gray-500">
+                Term of Service
+              </span>{" "}
+              <div className="flex items-center  justify-center ">
+                <span className="underline cursor-pointer hover:text-gray-500">
+                  privacy policy
+                </span>{" "}
+                <span className="p-[3px] text-gray-400">
+                  BasirTechnosoft pvt ltd
+                </span>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       )}
@@ -53,3 +84,6 @@ function Login({ open, closelogin }) {
 }
 
 export default Login;
+//now i am going to wrting the code for the terms and the condition
+
+///so  that the resone i am going to wrtnig the cos=de for the

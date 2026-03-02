@@ -24,7 +24,7 @@ const User=new mongoose.Schema({
   plane:{
     type:String,
     enum:["free","price","enterpricess"],
-    default:free
+    default:"free"
   }
 },{timestamps:true});
 

@@ -1,12 +1,28 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FcGoogle } from "react-icons/fc";
 import { auth, provider } from "../firebase.jsx";
-import { signInWithPopup, signOut } from "firebase/auth";
+import axios from "axios";
+import { inMemoryPersistence, signInWithPopup, signOut } from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice.js";
 function Login({ open, closelogin }) {
+  const dispatch = useDispatch();
   const HandleGoogleauth = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result.user);
+
+      const response = await axios.post(
+        "http://localhost:8000/auth/login",
+        {
+          name: result.user.displayName,
+          email: result.user.email,
+          avatar: result.user.photoURL,
+        },
+        { withCredentials: true },
+      );
+
+      // Redux me store karo
+      dispatch(setUserData(response.data.sabdata));
     } catch (error) {
       console.log(`this is the error from Login ${error}`);
     }
@@ -84,6 +100,3 @@ function Login({ open, closelogin }) {
 }
 
 export default Login;
-//now i am going to wrting the code for the terms and the condition
-
-///so  that the resone i am going to wrtnig the cos=de for the

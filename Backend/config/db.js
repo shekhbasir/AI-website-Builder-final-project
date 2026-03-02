@@ -1,4 +1,3 @@
-//here i am going to connecting the database 
 
 import mongoose, { mongo } from "mongoose";
 const Databaseconnect=async (req,res)=>{

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Login from "../components/Login.jsx";
+import { useSelector } from "react-redux";
 
 function Home() {
   const arr = [
@@ -9,6 +10,14 @@ function Home() {
   ];
 
   const [openlogin, setopenlogin] = useState(false);
+
+  const sabdata = useSelector((state) => state.user.userData);
+
+  //this way i am going to extract the data from the there
+
+  console.log(sabdata?.email, "", sabdata?.name, "", sabdata?.avatar);
+
+  //this is the path here i am going to taking the login data here and working simply
   return (
     <>
       <div className="min-h-screen w-full bg-black ">
@@ -21,12 +30,29 @@ function Home() {
               Pricing
             </button>
 
-            <button
-              onClick={() => setopenlogin(true)}
-              className="h-[40px] font-bold hover:bg-gray-800 transition duration-200 cursor-pointer rounded-[10px] w-[100px] bg-gray-600"
-            >
-              Get Started
-            </button>
+            {!sabdata ? (
+              <button
+                onClick={() => setopenlogin(true)}
+                className="h-[40px] font-bold hover:bg-gray-800 transition duration-200 cursor-pointer rounded-[10px] w-[100px] bg-gray-600"
+              >
+                Get Started
+              </button>
+            ) : (
+              <button className="relative h-[60px] w-[60px] flex items-center justify-center">
+                {/* Glow Ring */}
+                <span className="absolute inset-0 rounded-full border-[3px] border-red-500 animate-ringPulse pointer-events-none shadow-[0_0_15px_rgba(239,68,68,0.6)]"></span>
+
+                {/* Profile Image */}
+                <img
+                  className="h-[48px] w-[48px] rounded-full object-cover border-2 border-white z-10"
+                  src={
+                    sabdata?.avatar ||
+                    `https://ui-avatars.com/api/?name=${sabdata.name}`
+                  }
+                  alt="profile"
+                />
+              </button>
+            )}
           </div>
         </div>
         <div
@@ -45,12 +71,21 @@ function Home() {
             Describe Your Idea And Get Your Production Ready WebSite{" "}
           </p>{" "}
           <p className="font-light">With In Seconds</p> <br />
-          <button
-            onClick={() => setopenlogin(true)}
-            className="h-[40px] font-bold hover:bg-gray-800 transition duration-200 cursor-pointer rounded-[10px] w-[100px] bg-gray-600"
-          >
-            Get Started
-          </button>
+          {!sabdata ? (
+            <button
+              onClick={() => setopenlogin(true)}
+              className="h-[40px] font-bold hover:bg-gray-800 transition duration-200 cursor-pointer rounded-[10px] w-[100px] bg-gray-600"
+            >
+              Get Started
+            </button>
+          ) : (
+            <button
+              //  abb simply Yejan Daashbord wala link set kar deham ham simply
+              className="h-[40px] font-bold hover:bg-gray-800 transition duration-200 cursor-pointer rounded-[10px] w-[100px] bg-gray-600"
+            >
+              DashBoard
+            </button>
+          )}
         </div>
         <div
           id="thisis3"
@@ -91,9 +126,4 @@ function Home() {
 }
 export default Home;
 
-//now i am going to desing the code for the new feature of the developement
-//now i am going to wrting the code for the new web site for thee New Production
-
-//now i am going to wrting the code for the putitng the thing with the new style with loops
-
-//now i am going to wrintg  the code for the full
+//this is nothing but this is our home from this home page i am going t

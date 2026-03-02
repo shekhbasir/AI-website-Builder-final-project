@@ -1,7 +1,7 @@
 import UserDatabase from "../model/user.js";
 import jwt from "jsonwebtoken";
 
-const GoogleAuth = async (req, res) => {
+export const GoogleAuth = async (req, res) => {
   try {
     const { name, email, avatar } = req.body;
     let emailbaa = await UserDatabase.findOne({ email });
@@ -34,4 +34,27 @@ const GoogleAuth = async (req, res) => {
   }
 };
 
-export default GoogleAuth;
+
+
+export const Logout = async (req, res) => {
+  try {
+
+    res.cookie("token", "", {
+      httpOnly: true,
+      expires: new Date(0)
+    });
+
+    return res.status(200).json({
+      message: "Logged out successfully",
+      success: true
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: "Logout failed",
+      success: false
+    });
+  }
+};
+
+//now i am going to making the middle ware only autheerized user willl going to access the page 

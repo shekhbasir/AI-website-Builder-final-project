@@ -5,7 +5,9 @@ import axios from "axios";
 import { inMemoryPersistence, signInWithPopup, signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { setUserData } from "../redux/userSlice.js";
-function Login({ open, closelogin }) {
+import { useNavigate } from "react-router-dom";
+function Login({ open, closelogin, setopenlogin }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const HandleGoogleauth = async () => {
     try {
@@ -20,6 +22,7 @@ function Login({ open, closelogin }) {
         },
         { withCredentials: true },
       );
+      setopenlogin(false);
 
       // Redux me store karo
       dispatch(setUserData(response.data.sabdata));

@@ -196,7 +196,18 @@ npm run dev or npm start
 ---
 
 ## 📸 Screenshots
-<img width="1920" height="1008" alt="Screenshot 2026-03-15 210409" src="https://github.com/user-attachments/assets/bbe24eca-d4d8-48a1-b7b7-a6b98bd846a0" />
+<img width="1920" height="1008" alt="Screenshot 2026-03-15 210409" src="https://github.com/user-attachments/assets/bbe24eca-d4d8-48a1-b7b7-a6b98bd846a0" /> </br>
+<img width="960" height="478" alt="Screenshot 2026-03-15 210533" src="https://github.com/user-attachments/assets/ee4d6b0e-439f-437c-9176-67f7b1435e20" />
+</br>
+<img width="274" height="298" alt="Screenshot 2026-03-15 210602" src="https://github.com/user-attachments/assets/2168c7d3-de44-410a-a237-2b40d7353baa" />
+</br>
+<img width="960" height="478" alt="Screenshot 2026-03-15 210514" src="https://github.com/user-attachments/assets/305e7840-3869-4057-9143-ff307678c792" />
+</br>
+<img width="960" height="479" alt="Screenshot 2026-03-15 210802" src="https://github.com/user-attachments/assets/ddc5ca3c-49ba-4754-8366-b89fc25d7c1e" />
+</br>
+<img width="941" height="477" alt="Screenshot 2026-03-15 210634" src="https://github.com/user-attachments/assets/33b99f14-0430-4740-b20c-a88ff9892eaa" />
+</br>
+<img width="960" height="479" alt="Screenshot 2026-03-15 210920" src="https://github.com/user-attachments/assets/da5c8ada-d25f-4a40-9484-327ae8a32de5" />
 
 (Add screenshots of dashboard, editor, preview, etc.)
 

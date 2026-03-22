@@ -4,6 +4,9 @@ import Fetchdata from "../hooks/Fetchdata.jsx";
 import { useSelector } from "react-redux";
 import Dashbord from "./pages/Dashbord.jsx";
 import Generate from "./pages/Generate.jsx";
+import WebEditor from "./pages/WebEditor.jsx";
+import LiveSite from "./pages/LiveSite.jsx";
+import Pricing from "./pages/Pricing.jsx";
 
 function App() {
   const sabdata = useSelector((state) => state.user.userData);
@@ -21,6 +24,9 @@ function App() {
             path="/generate"
             element={sabdata ? <Generate /> : <Home />}
           ></Route>
+          <Route path="/editor/:id" element={<WebEditor />}></Route>
+          <Route path="/site/:id" element={<LiveSite />}></Route>
+          <Route path="/pricing" element={<Pricing />}></Route>
         </Routes>
       </BrowserRouter>
     </>

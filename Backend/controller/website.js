@@ -4,6 +4,7 @@ import { generateResponse } from "../config/openRouter.js";
 import UserDatabase from "../model/user.js";
 import website from "../model/website.js";
 import Extractjson from "../utils/extract.js";
+import { nanoid } from "nanoid";
 
 const masterPrompt = `
 YOU ARE A PRINCIPAL FRONTEND ARCHITECT
@@ -214,12 +215,15 @@ export const GenerateData = async (req, res) => {
       ],
     });
 
-    user.credit = user.credit - 50;
-    await user.save();
+    const updatedUser = await UserDatabase.findByIdAndUpdate(
+      user._id,
+      { $inc: { credit: -50 } },
+      { returnDocument: "after" },
+    );
 
     return res.status(201).json({
       websiteId: finalwebsite._id,
-      remainingCredit: user.credit,
+      remainingCredit: updatedUser.credit,
     });
 
     //now here i am going to wrting thhe code for the new prompt
@@ -229,3 +233,198 @@ export const GenerateData = async (req, res) => {
       .json({ message: "error from the Generate data", kabhail: error });
   }
 };
+
+//in the editor section i need website that is going to be edit soo edito section or  the specific website i need to require
+
+export const GetWebsiteById = async (req, res) => {
+  try {
+    //this si the way i am finding
+    const singlewebsite = await website.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!singlewebsite) {
+      return res
+        .status(400)
+        .json({ message: "Website Is Not Found", success: false });
+    }
+
+    return res.status(200).json(singlewebsite);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error from generate Website ", kabhail: error });
+  }
+};
+
+//now i am going to tecking the data from backendto frontend
+
+export const changewebsite = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    if (!prompt) {
+      return res
+        .status(400)
+        .json({ message: "prompt required for generating Any thing" });
+    }
+
+    const singlewebsite = await website.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!singlewebsite) {
+      return res
+        .status(400)
+        .json({ message: "Website Is Not Found", success: false });
+    }
+
+    const user = await UserDatabase.findById(req.user._id);
+    console.log(user);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "plz login for response generation" });
+    }
+
+    if (user.credit < 25) {
+      return res
+        .status(400)
+        .json({ message: "You Don't Have Enough Credit For Generate Website" });
+    }
+
+    const updateprompt = `
+YOU ARE A SENIOR FRONTEND ENGINEER.
+
+MODIFY THE EXISTING WEBSITE BASED ON USER REQUEST.
+
+IMPORTANT:
+- KEEP ALL EXISTING FEATURES
+- ONLY APPLY THE REQUESTED CHANGE
+- RETURN FULL UPDATED HTML FILE
+
+CURRENT HTML:
+${singlewebsite.latestcode}
+
+USER REQUEST:
+${prompt}
+
+RETURN RAW JSON ONLY:
+{
+ "message":"Short confirmation",
+ "code":"<FULL UPDATED HTML>"
+}
+`;
+
+    let row = "";
+    let parsed = null;
+    for (let i = 0; i < 2 && !parsed; i++) {
+      row = await generateResponse(updateprompt);
+      parsed = await Extractjson(row);
+      if (!parsed) {
+        row = await generateResponse(
+          updateprompt + "\n\n RETURN ONLY ROW JSON.",
+        );
+        parsed = await Extractjson(row);
+      }
+      console.log(row);
+    }
+
+    if (!parsed || !parsed.code) {
+      console.log("Ai return invalid response ", row);
+      return res.status(400).json({ message: "Ai return invalid data " });
+    }
+
+    singlewebsite.converasation.push(
+      { role: "user", content: prompt },
+      { role: "ai", content: parsed.message },
+    );
+    singlewebsite.latestcode = parsed.code;
+    await singlewebsite.save();
+
+    const updatedUser = await UserDatabase.findByIdAndUpdate(
+      user._id,
+      { $inc: { credit: -25 } },
+      { returnDocument: "after" },
+    );
+
+    return res.status(201).json({
+      message: parsed.message,
+      code: parsed.code,
+      remainingCredit: updatedUser.credit,
+    });
+    //now abb aagail prompt and user bhi milgail then lets see
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "update website errror", kabhail: error });
+  }
+};
+
+export const getingallwebsite = async (req, res) => {
+  try {
+    //here i am going to
+    const allwebsite = await website.find({ user: req.user._id });
+    return res.status(200).json(allwebsite);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Getting all  website errror", kabhail: error });
+  }
+};
+
+export const deploywebsite = async (req, res) => {
+  try {
+    //here i am going to teckin
+    const singlewebsite = await website.findOne({
+      _id: req.params.id,
+      user: req.user._id,
+    });
+
+    if (!singlewebsite) {
+      return res
+        .status(400)
+        .json({ message: "Website Is Not Found", success: false });
+    }
+
+    if (!singlewebsite.slug) {
+      singlewebsite.slug =
+        singlewebsite.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, "")
+          .slice(0, 60) + singlewebsite._id.toString().slice(-5);
+    }
+
+    singlewebsite.deployed = true;
+    singlewebsite.deployUrl = `${process.env.FRONTEND_URL}/site/${singlewebsite.slug}`;
+    await singlewebsite.save();
+
+    return res.status(200).json({ url: singlewebsite.deployUrl });
+  } catch (error) {
+    return res.status(500).json({ message: "Error fromt the deplywebsite " });
+  }
+};
+
+export const getbyslug = async (req, res) => {
+  try {
+    ///
+
+    const singlewebsite = await website.findOne({
+      slug: req.params.slug,
+      user: req.user._id,
+    });
+
+    if (!singlewebsite) {
+      return res
+        .status(400)
+        .json({ message: "Website Is Not Found", success: false });
+    }
+
+    return res.status(200).json(singlewebsite);
+  } catch (error) {
+    return res.status(500).json({ message: "error from the singlewebsite" });
+  }
+};
+
+//now i am going to working the backend site real project

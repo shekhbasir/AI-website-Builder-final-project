@@ -7,7 +7,7 @@ const messaageschema = new mongoose.Schema(
   {
     role: {
       type: String,
-      enum: ["AI", "user"],
+      enum: ["ai", "user"],
       required: true,
     },
     content: {
@@ -48,5 +48,7 @@ const websiteschema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-const website = mongoose.model("websitemodel", websiteschema);
+const website = mongoose.model("website", websiteschema);
 export default website;
+
+///now i am going to wrting the code for the website deploymemtn code

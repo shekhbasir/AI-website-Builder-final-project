@@ -9,18 +9,55 @@ function Generate() {
   const navigate = useNavigate();
   const sabdata = useSelector((state) => state.user.userData);
   const [prompt, setPrompt] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const steps = [
+    "…thinking",
+    "Memorizing patterns...",
+    "Adding style...",
+    "Writing logic...",
+    "Adding interactive elements...",
+    "Optimizing performance...",
+    "Finalizing website...",
+  ];
+
+  const totalTime = 60; // total time in seconds
+  const stepTime = totalTime / steps.length;
 
   const Handlegeneratewebsite = async () => {
+    if (!prompt) return;
+    setIsGenerating(true);
+    setProgress(0);
+    setStatusMessage(steps[0]);
+
+    for (let i = 0; i < steps.length; i++) {
+      setStatusMessage(steps[i]);
+      const newProgress = ((i + 1) / steps.length) * 100;
+      setProgress(newProgress);
+      await new Promise((resolve) => setTimeout(resolve, stepTime * 1000));
+    }
+
+    // Simulate API call
     try {
-      //here
       const result = await axios.post(
         "http://localhost:8000/website/generate",
         { prompt },
         { withCredentials: true },
       );
       console.log(result);
+      setStatusMessage("Completed! Redirecting...");
+      setTimeout(() => {
+        setIsGenerating(false);
+        setProgress(0);
+        setStatusMessage("");
+      }, 1500);
     } catch (error) {
-      console.log("error from Generate website handle" + error);
+      console.log("Error generating website: " + error);
+      setStatusMessage("Error occurred!");
+      setIsGenerating(false);
+      setProgress(0);
     }
   };
 
@@ -58,7 +95,6 @@ function Generate() {
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
-
             <span className="text-sm font-medium">{sabdata?.name}</span>
           </motion.div>
         </div>
@@ -66,7 +102,6 @@ function Generate() {
 
       {/* Main Section */}
       <div className="max-w-4xl mx-auto px-6 py-20 text-center">
-        {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,7 +132,7 @@ function Generate() {
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Enter Your Prompt or Idead To Get Your WebSite...."
+            placeholder="Enter Your Prompt or Idea To Get Your Website..."
             className="w-full h-[140px] bg-black border border-white/10 rounded-lg p-4 outline-none focus:border-yellow-400 resize-none"
           />
 
@@ -107,11 +142,39 @@ function Generate() {
               boxShadow: "0px 0px 20px rgba(255,215,0,0.4)",
             }}
             whileTap={{ scale: 0.95 }}
-            className="mt-6 px-8 py-3 bg-gray-900  text-white  rounded-lg cursor-pointer font-bold"
+            className="mt-6 px-8 py-3 bg-gray-900 text-white rounded-lg cursor-pointer font-bold relative overflow-hidden"
             onClick={Handlegeneratewebsite}
+            disabled={isGenerating}
           >
-            Generate Website
+            {isGenerating ? "Generating..." : "Generate Website"}
           </motion.button>
+
+          {/* Step messages */}
+          {isGenerating && (
+            <div className="mt-4 mb-2 text-center text-white font-medium">
+              {statusMessage}
+            </div>
+          )}
+
+          {/* Thin "water flow" progress bar */}
+          {isGenerating && (
+            <div className="mt-2 w-full h-3 bg-white/20 rounded-full overflow-hidden">
+              <motion.div
+                className="h-3 rounded-full bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600"
+                initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ ease: "easeInOut", duration: 0.5 }}
+              />
+            </div>
+          )}
+
+          {/* Estimated time */}
+          {isGenerating && (
+            <div className="mt-1 text-xs text-white/60">
+              Estimated time: {Math.ceil(((100 - progress) / 100) * totalTime)}{" "}
+              sec
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

@@ -33,7 +33,10 @@ function Home() {
             GenWeb.AI
           </div>
           <div className="flex justify-center gap-20 ">
-            <button className="h-[40px] w-[100px] border border-gray-500 rounded-[10px] bg-transparent text-white cursor-pointer flex items-center justify-center">
+            <button
+              className="h-[40px] w-[100px] border border-gray-500 rounded-[10px] bg-transparent text-white cursor-pointer flex items-center justify-center"
+              onClick={() => hamarnavigate("/pricing")}
+            >
               Pricing
             </button>
 

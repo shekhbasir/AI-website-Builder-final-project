@@ -64,7 +64,6 @@ function LiveSite() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Fixed Navbar */}
       <motion.div
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -86,7 +85,6 @@ function LiveSite() {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Copy URL Button */}
             <button
               onClick={handleCopyUrl}
               className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg text-sm font-medium transition"
@@ -100,10 +98,8 @@ function LiveSite() {
         </div>
       </motion.div>
 
-      {/* Spacer for fixed navbar */}
       <div className="h-20" />
 
-      {/* Page Title */}
       <motion.h1
         className="text-3xl font-bold text-white text-center mb-6"
         initial={{ opacity: 0, y: -20 }}
@@ -113,7 +109,6 @@ function LiveSite() {
         Live Website Preview
       </motion.h1>
 
-      {/* Live Website iframe */}
       <div className="w-full max-w-6xl mx-auto h-[80vh] border border-gray-700 rounded-xl overflow-hidden shadow-xl">
         <iframe
           srcDoc={html}
@@ -123,7 +118,6 @@ function LiveSite() {
         />
       </div>
 
-      {/* Footer Note */}
       <motion.p
         className="text-gray-400 mt-4 text-center text-sm"
         initial={{ opacity: 0 }}

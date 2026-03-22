@@ -23,7 +23,7 @@ function Generate() {
     "Finalizing website...",
   ];
 
-  const totalTime = 60; // total time in seconds
+  const totalTime = 60;
   const stepTime = totalTime / steps.length;
 
   const Handlegeneratewebsite = async () => {
@@ -39,7 +39,6 @@ function Generate() {
       await new Promise((resolve) => setTimeout(resolve, stepTime * 1000));
     }
 
-    // Simulate API call
     try {
       const result = await axios.post(
         "http://localhost:8000/website/generate",
@@ -63,7 +62,6 @@ function Generate() {
 
   return (
     <div className="min-h-screen bg-black w-full text-white">
-      {/* Navbar */}
       <motion.div
         initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -100,7 +98,6 @@ function Generate() {
         </div>
       </motion.div>
 
-      {/* Main Section */}
       <div className="max-w-4xl mx-auto px-6 py-20 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
@@ -122,7 +119,6 @@ function Generate() {
           BasirTechnosoft.Ai
         </motion.p>
 
-        {/* Prompt Box */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,14 +145,12 @@ function Generate() {
             {isGenerating ? "Generating..." : "Generate Website"}
           </motion.button>
 
-          {/* Step messages */}
           {isGenerating && (
             <div className="mt-4 mb-2 text-center text-white font-medium">
               {statusMessage}
             </div>
           )}
 
-          {/* Thin "water flow" progress bar */}
           {isGenerating && (
             <div className="mt-2 w-full h-3 bg-white/20 rounded-full overflow-hidden">
               <motion.div
@@ -168,7 +162,6 @@ function Generate() {
             </div>
           )}
 
-          {/* Estimated time */}
           {isGenerating && (
             <div className="mt-1 text-xs text-white/60">
               Estimated time: {Math.ceil(((100 - progress) / 100) * totalTime)}{" "}

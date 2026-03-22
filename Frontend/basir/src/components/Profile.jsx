@@ -6,7 +6,6 @@ import axios from "axios";
 import { logout } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 
-//ok here i am going to setup the task
 function Profile({ setprofile }) {
   const sabdata = useSelector((state) => state.user.userData);
   const dispatch = useDispatch();
@@ -15,8 +14,6 @@ function Profile({ setprofile }) {
   const Handlelogout = async () => {
     console.log("logout click");
     try {
-      //here await
-
       const kabhail = await axios.get("http://localhost:8000/auth/logout", {
         withCredentials: true,
       });

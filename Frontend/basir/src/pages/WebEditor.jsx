@@ -91,8 +91,6 @@ function WebEditor() {
 
   return (
     <div className="h-screen flex flex-col bg-black text-white">
-      {/* TOP BAR */}
-
       <div className="flex justify-between items-center px-6 py-3 border-b border-white/10">
         <h2 className="font-semibold text-lg">{website.title}</h2>
 
@@ -124,11 +122,7 @@ function WebEditor() {
         </div>
       </div>
 
-      {/* MAIN LAYOUT */}
-
       <div className="flex flex-1 overflow-hidden">
-        {/* CHAT SIDE */}
-
         <div className="w-[35%] border-r border-white/10 flex flex-col">
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {message.map((msg, index) => (
@@ -145,8 +139,6 @@ function WebEditor() {
               </motion.div>
             ))}
           </div>
-
-          {/* INPUT */}
 
           <div className="p-4 border-t border-white/10 flex gap-2">
             <input
@@ -167,8 +159,6 @@ function WebEditor() {
           </div>
         </div>
 
-        {/* WEBSITE PREVIEW */}
-
         <div className="flex-1 flex flex-col">
           <div className="flex-1 bg-white">
             <iframe
@@ -180,8 +170,6 @@ function WebEditor() {
         </div>
       </div>
 
-      {/* FULL CODE DRAWER */}
-
       {show && (
         <motion.div
           initial={{ x: "100%" }}
@@ -190,8 +178,6 @@ function WebEditor() {
           transition={{ duration: 0.3 }}
           className="fixed top-0 right-0 w-[50%] h-full bg-black border-l border-white/10 z-50 flex flex-col"
         >
-          {/* HEADER */}
-
           <div className="flex justify-between items-center px-4 py-3 border-b border-white/10">
             <h3 className="font-semibold">Full Code</h3>
 
@@ -202,8 +188,6 @@ function WebEditor() {
               <FaTimes />
             </button>
           </div>
-
-          {/* MONACO EDITOR */}
 
           <div className="flex-1">
             <Editor
@@ -259,5 +243,4 @@ function WebEditor() {
 
 export default WebEditor;
 
-
-//now i am going to wrting the code for the dashord where alll the code wiill working 
+//now i am going to wrting the code for the dashord where alll the code wiill working

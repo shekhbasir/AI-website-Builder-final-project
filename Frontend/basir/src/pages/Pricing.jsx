@@ -72,7 +72,6 @@ function Pricing() {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen py-12 px-4">
-      {/* Navbar with Back button */}
       <motion.div
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -93,7 +92,6 @@ function Pricing() {
         </div>
       </motion.div>
 
-      {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-3xl md:text-4xl font-bold mb-2">
           Transparent Pricing
@@ -103,7 +101,6 @@ function Pricing() {
         </p>
       </div>
 
-      {/* Pricing Cards */}
       <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {planes.map((plane, index) => (
           <motion.div
@@ -118,7 +115,6 @@ function Pricing() {
                 : "border-gray-700 bg-gray-850"
             } relative`}
           >
-            {/* Gold Glow Animation for Pro & Enterprise */}
             {plane.popular && plane.id > 1 && (
               <motion.div
                 className="absolute inset-0 rounded-xl border-2 border-yellow-400 pointer-events-none"
@@ -137,14 +133,12 @@ function Pricing() {
               />
             )}
 
-            {/* Popular badge */}
             {plane.popular && (
               <div className="bg-yellow-400 text-gray-900 font-semibold px-3 py-1 rounded-full text-xs md:text-sm self-start mb-2 z-10 relative cursor-pointer">
                 POPULAR
               </div>
             )}
 
-            {/* Animated Emoji */}
             {plane.id === 2 && (
               <motion.div
                 className="text-3xl absolute -top-5 right-4 z-20"

@@ -209,7 +209,7 @@ npm run dev or npm start
 </br>
 <img width="960" height="479" alt="Screenshot 2026-03-15 210920" src="https://github.com/user-attachments/assets/da5c8ada-d25f-4a40-9484-327ae8a32de5" />
 
-(Add screenshots of dashboard, editor, preview, etc.)
+
 
 ---
 

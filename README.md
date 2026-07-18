@@ -153,7 +153,7 @@ git clone https://github.com/shekhbasir/AI-website-Builder-final-project
 ```bash
 cd Backend
 npm install
-npm start
+npm run dev 
 ```
 
 Create `.env` file:
@@ -168,7 +168,7 @@ JWT_SECRET=your_jwt_secret
 Run backend:
 
 ```bash
-npm start
+npm run dev 
 ```
 
 ---
